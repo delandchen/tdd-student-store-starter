@@ -6,3 +6,23 @@
   display: flex;
   flex-direction: column;
 }
+
+.product-grid {
+  display: flex;
+  flex: row;
+  margin: 0 auto;
+}
+
+.content {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.product-grid .item-card {
+  display: flex;
+  flex-direction: column;
+  border: solid 1px black;
+  height: 350px;
+  width: 250px;
+}

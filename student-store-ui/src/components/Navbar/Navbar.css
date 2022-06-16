@@ -1,0 +1,15 @@
+.navbar {
+    display: flex;
+    flex-direction: row;
+    margin: auto;
+    background-color: aquamarine;
+    max-width: 100vw;
+}
+
+.navbar .content {
+    display: flex;
+    flex-direction: row;
+    margin: auto;
+    width: 100%;
+    align-items: center;
+}
