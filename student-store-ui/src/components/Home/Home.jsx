@@ -1,15 +1,13 @@
 import * as React from "react"
 import "./Home.css"
 import { Link } from "react-router-dom"
+import banner from "./banner.jpg"
 
 export default function Home(props) {
   return (
     <div className="home">
       <div className="banner">
-        <div className="content">
-          <h1> Welcome,</h1>
-          <p> Buy Something or Die</p>
-        </div>
+        <img src={banner}></img>
       </div>
       <div className="home-navbar">
         <div className="search">
@@ -72,7 +70,7 @@ export function ItemCard(props) {
         </div>
       </Link>
       <div className="description">
-        <Link to="/details">
+        <Link to="/details" style={{ textDecoration: 'none' }}>
           <h1 id="name"> {props.name}</h1>
         </Link>
         <h2 id="price"> ${props.price} </h2>

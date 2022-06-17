@@ -6,7 +6,14 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    background-color: aquamarine;
+    background-color: #8EE4AF;
+}
+
+.navbar img {
+    position: absolute;
+    height: 125px;
+    width: 125px;
+    left: 200px;
 }
 
 .navbar .content {
