@@ -1,0 +1,23 @@
+.product-card {
+    display: flex;
+    flex-direction: column;
+    margin: 20vh auto;
+    border: 1px solid black;
+    padding: 10px;
+}
+
+.product-card .image {
+    max-height: 600px;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.image img {
+    max-height: 600px;
+    max-width: 400px;
+    border: 1px solid black;
+}
+
+.product-card .details {
+    margin: 0 auto;
+}

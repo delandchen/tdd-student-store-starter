@@ -4,7 +4,10 @@ import "./Sidebar.css"
 export default function Sidebar() {
   return (
     <section className="sidebar">
-      <p>Sidebar</p>
+      <div className="content">
+        <i class="material-icons md-48"> arrow_forward </i>
+        <i class="material-icons md-48"> shopping_cart_checkout </i>
+      </div>
     </section>
   )
 }
