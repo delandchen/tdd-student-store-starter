@@ -4,7 +4,7 @@ import { Link } from "react-router-dom"
 import ProductGrid from "../ProductGrid/ProductGrid"
 import Hero from "../Hero/Hero"
 
-export default function Home(props) {
+export default function Home(props, { handleAddItemToCart, handleRemoveItemToCart }) {
   return (
     <div className="home">
       {/* <div className="banner">

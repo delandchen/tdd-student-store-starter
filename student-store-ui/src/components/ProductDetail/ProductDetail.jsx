@@ -1,7 +1,7 @@
 import * as React from "react"
 import "./ProductDetail.css"
 
-export default function ProductDetail(props) {
+export default function ProductDetail(props, { handleAddItemToCart, handleRemoveItemToCart }) {
     const [product, setProduct] = React.useState(null);
     return (
         <div className="product-detail">
