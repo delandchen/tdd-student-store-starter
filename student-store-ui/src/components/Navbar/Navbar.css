@@ -7,13 +7,9 @@
     flex-direction: row;
     align-items: center;
     background-color: #8EE4AF;
-}
-
-.navbar img {
-    position: absolute;
-    height: 125px;
-    width: 125px;
-    left: 200px;
+    position: fixed;
+    left: 0;
+    top: 0;
 }
 
 .navbar .content {

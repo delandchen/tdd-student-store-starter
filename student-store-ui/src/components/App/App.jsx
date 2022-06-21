@@ -3,6 +3,7 @@ import Navbar from "../Navbar/Navbar"
 import Sidebar from "../Sidebar/Sidebar"
 import Home from "../Home/Home"
 import Footer from "../Footer/Footer"
+import NotFound from "../NotFound/NotFound"
 import "./App.css"
 import { BrowserRouter, Route, Routes } from "react-router-dom"
 import ProductDetail from "../ProductDetail/ProductDetail"
@@ -18,20 +19,27 @@ export default function App() {
   const [shoppingCart, setShoppingCart] = React.useState([]);
   const [searchTerm, setSearchTerm] = React.useState("");
 
+  // Handlers //
 
+  // Sets item to display on ProductDetails component
   const handleDisplayItemOnClick = (item) => {
     setItem(item);
   }
 
+  // Sets the search term state
   const handleSetSearchTerm = (e) => {
     setSearchTerm(e.target.value);
     fetchSearchedItems();
   }
 
+  // Calls the function that fetches API data and filters it for display based on the category
   const handleSelectCategory = (category) => {
     fetchSpecificItems(category);
   }
 
+  // API Calls //
+
+  // Fetches API data and filters based on search term
   const fetchSearchedItems = async () => {
     const data = await axios.get("https://codepath-store-api.herokuapp.com/store").then((res) => {
       return res.data.products;
@@ -51,7 +59,7 @@ export default function App() {
     setProducts(searched);
   }
 
-
+  // Fetches API data and filters based on category
   const fetchSpecificItems = async (category) => {
     const data = await axios.get("https://codepath-store-api.herokuapp.com/store").then((res) => {
       return res.data.products;
@@ -71,8 +79,7 @@ export default function App() {
     setProducts(categorized);
   }
 
-
-  // API to get all items
+  // API to get ALL items
   const fetchItems = async () => {
     await axios.get("https://codepath-store-api.herokuapp.com/store").then((res) => {
       const data = res.data.products;
@@ -98,7 +105,8 @@ export default function App() {
           <Routes>
             <Route path="/" element={<Home products={products} handleSetSearchTerm={handleSetSearchTerm}
               handleSelectCategory={handleSelectCategory} handleDisplayItemOnClick={handleDisplayItemOnClick} fetchItems={fetchItems} />}> </Route>
-            <Route path="details" element={<ProductDetail item={item} />}> </Route>
+            {products.map((obj) => (<Route path={"/products/" + obj.id} element={<ProductDetail item={obj} />}> </Route>))}
+            <Route path="/*" element={<NotFound />}></Route>
           </Routes>
           <Footer />
         </main>

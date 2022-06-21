@@ -1,0 +1,12 @@
+.product-grid {
+    display: flex;
+    flex: row;
+    margin: 0 auto;
+    margin-top: 10px;
+}
+
+.product-grid .content {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 40px;
+}

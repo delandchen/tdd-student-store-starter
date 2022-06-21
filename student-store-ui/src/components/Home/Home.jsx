@@ -1,14 +1,16 @@
 import * as React from "react"
 import "./Home.css"
 import { Link } from "react-router-dom"
-import banner from "./banner.jpg"
+import ProductGrid from "../ProductGrid/ProductGrid"
+import Hero from "../Hero/Hero"
 
 export default function Home(props) {
   return (
     <div className="home">
-      <div className="banner">
+      {/* <div className="banner">
         <img src={banner}></img>
-      </div>
+      </div> */}
+      <Hero />
       <div className="home-navbar">
         <div className="search">
           <form id="search-form">
@@ -25,13 +27,14 @@ export default function Home(props) {
 
         </div>
       </div>
-      <div id="buy" className="product-grid">
+      {/* <div id="buy" className="product-grid">
         <div className="content">
           {props.products.map((item) => (
-            <ItemCard handleDisplayItemOnClick={() => props.handleDisplayItemOnClick(item)} imgSrc={item.image} key={item.id} price={item.price} name={item.name} />
+            <ItemCard handleDisplayItemOnClick={() => props.handleDisplayItemOnClick(item)} imgSrc={item.image} id={item.id} price={item.price} name={item.name} />
           ))}
         </div>
-      </div>
+      </div> */}
+      <ProductGrid products={props.products} />
       <div id="about" className="about">
         <div class="content">
           <div class="summary">
@@ -58,25 +61,4 @@ export default function Home(props) {
       </div>
     </div>
   )
-}
-
-
-export function ItemCard(props) {
-  return (
-    <div className="item-card" key={props.id} onClick={props.handleDisplayItemOnClick}>
-      <Link to="/details">
-        <div className="image">
-          <img src={props.imgSrc}></img>
-        </div>
-      </Link>
-      <div className="description">
-        <Link to="/details" style={{ textDecoration: 'none' }}>
-          <h1 id="name"> {props.name}</h1>
-        </Link>
-        <h2 id="price"> ${props.price} </h2>
-      </div>
-
-    </div>
-
-  );
 }

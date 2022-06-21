@@ -1,0 +1,13 @@
+.logo {
+    position: absolute;
+    max-height: 125px;
+    max-width: 125px;
+    display: flex;
+    margin: auto;
+    left: 200px;
+}
+
+.logo #logo-img {
+    height: 125px;
+    width: 125px;
+}

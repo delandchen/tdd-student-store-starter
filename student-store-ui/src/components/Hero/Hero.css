@@ -1,0 +1,20 @@
+.hero {
+    display: flex;
+    max-width: 75vw;
+    height: 30vh;
+    width: 100%;
+    margin: auto;
+    margin-top: 40px;
+    color: rgb(26, 25, 25);
+}
+
+.hero .intro {
+    position: absolute;
+    z-index: -1000;
+}
+
+.hero .hero-img {
+    margin: auto;
+    width: 60vw;
+    height: 30vh;
+}

@@ -2,8 +2,9 @@ import * as React from "react"
 import "./ProductDetail.css"
 
 export default function ProductDetail(props) {
+    const [product, setProduct] = React.useState(null);
     return (
-        <div className="product-card">
+        <div className="product-detail">
             <div className="image">
                 <img src={props.item.image}></img>
             </div>
