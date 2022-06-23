@@ -7,6 +7,11 @@
     width: 200px;
 }
 
+.product-card .description {
+    display: flex;
+    flex-direction: column;
+}
+
 .product-card .image {
     max-height: 200px;
     max-width: 200px;
@@ -22,8 +27,23 @@
 .product-card .product-name {
     font-size: 20px;
     text-decoration: none;
+    margin: auto;
 }
 
-.product-card .product-price {
-    color: rgb(0, 168, 0)
+.product-card .price-add {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    margin: auto;
+    gap: 50px;
+}
+
+.product-card .price-add .product-price {
+    color: rgb(0, 168, 0);
+    margin: auto;
+}
+
+.product-card .material-icons.md-48 {
+    font-size: 30px;
+    margin: auto;
 }

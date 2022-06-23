@@ -14,7 +14,13 @@ export default function ProductCard(props, { showDescription = false }) {
                 <Link to={"/products/" + props.id} style={{ textDecoration: 'none' }}>
                     <h1 className="product-name"> {props.name}</h1>
                 </Link>
-                <h2 className="product-price"> ${props.price} </h2>
+                <div className="price-add">
+                    <h2 className="product-price"> ${props.price} </h2>
+                    <span>
+                        <i class="material-icons md-48"> remove </i>
+                        <i class="material-icons md-48"> add </i>
+                    </span>
+                </div>
             </div>
 
         </div>

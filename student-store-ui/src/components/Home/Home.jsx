@@ -4,7 +4,7 @@ import { Link } from "react-router-dom"
 import ProductGrid from "../ProductGrid/ProductGrid"
 import Hero from "../Hero/Hero"
 
-export default function Home(props, { handleAddItemToCart, handleRemoveItemToCart }) {
+export default function Home(props, { handleAddItemToCart, handleRemoveItemFromCart }) {
   return (
     <div className="home">
       {/* <div className="banner">
@@ -34,7 +34,7 @@ export default function Home(props, { handleAddItemToCart, handleRemoveItemToCar
           ))}
         </div>
       </div> */}
-      <ProductGrid products={props.products} />
+      <ProductGrid products={props.products} handleAddItemToCart={handleAddItemToCart} handleRemoveItemFromCart={handleRemoveItemFromCart} />
       <div id="about" className="about">
         <div class="content">
           <div class="summary">

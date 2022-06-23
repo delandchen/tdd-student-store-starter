@@ -34,14 +34,39 @@ export default function App() {
 
   // Calls the function that fetches API data and filters it for display based on the category
   const handleSelectCategory = (category) => {
-    fetchSpecificItems(category);
+    fetchCategorizedItems(category);
+  }
+
+  // For toggling sidebar
+  const handleOnToggle = () => {
+
+  }
+
+  // For adding to cart
+  const handleAddItemToCart = (productId) => {
+    // If product exists in shopping cart, increment. Else set to 1
+  }
+
+  // For removing from cart
+  const handleRemoveItemFromCart = (productId) => {
+
+  }
+
+  // name is attribute of the input being updated, value is the new value for the input
+  const handleOnCheckoutFormChange = (name, value) => {
+
+  }
+
+  // API post to purchase in db.json
+  const handleOnSubmitCheckoutForm = () => {
+
   }
 
   // API Calls //
 
   // Fetches API data and filters based on search term
   const fetchSearchedItems = async () => {
-    const data = await axios.get("https://codepath-store-api.herokuapp.com/store").then((res) => {
+    const data = await axios.get("http://localhost:3001/store").then((res) => {
       return res.data.products;
     }).catch((err) => {  // If there is an error, setError and log it
       setError(err.response);
@@ -50,22 +75,27 @@ export default function App() {
 
     const searched = [];
 
-    data.forEach((item) => {
-      if (item.name.toLowerCase().includes(searchTerm.toLowerCase())) {
-        searched.push(item);
-      }
-    })
+    if (searchTerm) {
+      data.forEach((item) => {
+        if (item.name.toLowerCase().includes(searchTerm.toLowerCase())) {
+          searched.push(item);
+        }
+      })
 
-    setProducts(searched);
+      setProducts(searched);
+    }
+    else {
+      setProducts(data);
+    }
   }
 
   // Fetches API data and filters based on category
-  const fetchSpecificItems = async (category) => {
-    const data = await axios.get("https://codepath-store-api.herokuapp.com/store").then((res) => {
+  const fetchCategorizedItems = async (category) => {
+    const data = await axios.get("http://localhost:3001/store").then((res) => {
       return res.data.products;
     }).catch((err) => {  // If there is an error, setError and log it
       setError(err.response);
-      console.log(err.response);
+      console.log("error is: " + err.response);
     });
 
     const categorized = [];
@@ -79,21 +109,31 @@ export default function App() {
     setProducts(categorized);
   }
 
+  const fetchSpecificItem = async (id) => {
+    await axios.get("http://localhost:3001/store/" + id).then((res) => {
+      const data = res.data.product;
+      setItem(data);
+    }).catch((err) => {  // If there is an error, setError and log it
+      setError(err.response);
+      console.log("error is: " + err.response);
+    });
+  }
+
   // API to get ALL items
   const fetchItems = async () => {
-    await axios.get("https://codepath-store-api.herokuapp.com/store").then((res) => {
+    await axios.get("http://localhost:3001/store").then((res) => {
       const data = res.data.products;
       setProducts([...data]);
     }).catch((err) => {  // If there is an error, setError and log it
       setError(err.response);
-      console.log(err.response);
+      console.log("error is: " + err.response);
     });
   }
 
   // If the App component mounted, then fetch array of store objects
   React.useEffect(() => {
     fetchItems();
-    console.log(products);
+    console.log("product is: " + products);
   }, []);
 
   return (
@@ -101,10 +141,13 @@ export default function App() {
       <BrowserRouter>
         <main>
           <Navbar />
-          <Sidebar />
+          <Sidebar isOpen={isOpen} setIsOpen={setIsOpen} shoppingCart={shoppingCart} products={products}
+            handleOnCheckoutFormChange={handleOnCheckoutFormChange} handleOnSubmitCheckoutForm={handleOnSubmitCheckoutForm}
+            handleOnToggle={handleOnToggle} />
           <Routes>
             <Route path="/" element={<Home products={products} handleSetSearchTerm={handleSetSearchTerm}
-              handleSelectCategory={handleSelectCategory} handleDisplayItemOnClick={handleDisplayItemOnClick} fetchItems={fetchItems} />}> </Route>
+              handleSelectCategory={handleSelectCategory} handleDisplayItemOnClick={handleDisplayItemOnClick} fetchItems={fetchItems}
+              handleAddItemToCart={handleAddItemToCart} handleRemoveItemFromCart={handleRemoveItemFromCart} />}></Route>
             {products.map((obj) => (<Route path={"/products/" + obj.id} element={<ProductDetail item={obj} />}> </Route>))}
             <Route path="/*" element={<NotFound />}></Route>
           </Routes>
