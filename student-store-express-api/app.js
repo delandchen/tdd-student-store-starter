@@ -6,15 +6,27 @@ const app = express();
 
 // Middleware
 app.use(express.json());
-app.use(function (req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    next();
-});
+app.use(cors());
 app.use("/store", storeRouter);
 
 app.get('/', (req, res) => {
     res.status(200).send({ "ping": "pong" });
 });
+
+// 404 Errors 
+app.use((req, res, next) => {
+    // return next(new NotFoundError())
+    return;
+})
+
+// Generic Handler
+app.use((error, req, res, next) => {
+    const status = error.status || 500
+    const message = error.message
+
+    return res.status(status).json({
+        error: { message, status },
+    })
+})
 
 module.exports = app;

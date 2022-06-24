@@ -18,6 +18,8 @@ export default function App() {
   const [isOpen, setIsOpen] = React.useState(false);
   const [shoppingCart, setShoppingCart] = React.useState([]);
   const [searchTerm, setSearchTerm] = React.useState("");
+  const [checkoutForm, setCheckoutForm] = React.useState({ email: "", name: "" })
+  const [checkedOut, setCheckedOut] = React.useState(false);
 
   // Handlers //
 
@@ -39,27 +41,78 @@ export default function App() {
 
   // For toggling sidebar
   const handleOnToggle = () => {
+    if (!isOpen) {
+      setIsOpen(true);
+      document.querySelector(".sidebar").classList.add("opened")
+    }
 
+    if (isOpen) {
+      setIsOpen(false);
+      document.querySelector(".sidebar").classList.remove("opened")
+    }
   }
 
   // For adding to cart
   const handleAddItemToCart = (productId) => {
     // If product exists in shopping cart, increment. Else set to 1
+    const newArr = [...shoppingCart];
+
+    if (newArr.some(el => el.itemId == productId)) {
+      newArr.forEach((el) => {
+        if (el.itemId == productId) {
+          el.quantity += 1;
+        }
+      })
+
+      setShoppingCart(newArr);
+    }
+    else {
+      newArr.push({ itemId: productId, quantity: 1 })
+      setShoppingCart(newArr);
+    }
+
+    setCheckedOut(false);
   }
 
   // For removing from cart
   const handleRemoveItemFromCart = (productId) => {
+    if (shoppingCart.some(el => el.itemId == productId)) {
+      const newArr = [...shoppingCart];
 
+      newArr.forEach((el, idx) => {
+        if (el.itemId == productId && el.quantity > 1) {
+          el.quantity -= 1;
+        }
+        else if (el.id == productId && el.quantity == 0) {
+          newArr.splice(idx, 1);
+        }
+      })
+
+      setShoppingCart[[...newArr]];
+      console.log(shoppingCart);
+    }
   }
 
   // name is attribute of the input being updated, value is the new value for the input
-  const handleOnCheckoutFormChange = (name, value) => {
+  const handleOnCheckoutFormChange = (e) => {
+    if (e.target.name == "email") {
+      setCheckoutForm({ name: checkoutForm.name, email: e.target.value });
+    }
+    else if (e.target.name == "name") {
+      setCheckoutForm({ name: e.target.value, email: checkoutForm.email });
+    }
 
+    console.log(checkoutForm);
   }
 
   // API post to purchase in db.json
-  const handleOnSubmitCheckoutForm = () => {
+  const handleOnSubmitCheckoutForm = async () => {
+    const response = await axios.post("http://localhost:3001/store/", { shoppingCart: shoppingCart, user: checkoutForm })
+    console.log(response.data.purchase);
 
+    setShoppingCart([]);
+    setCheckoutForm({ email: "", name: "" })
+    setCheckedOut(true);
   }
 
   // API Calls //
@@ -109,14 +162,15 @@ export default function App() {
     setProducts(categorized);
   }
 
-  const fetchSpecificItem = async (id) => {
-    await axios.get("http://localhost:3001/store/" + id).then((res) => {
-      const data = res.data.product;
-      setItem(data);
+  const fetchSpecificItem = async (itemId) => {
+    const data = await axios.get("http://localhost:3001/store/" + itemId).then((res) => {
+      return res.data.product;
     }).catch((err) => {  // If there is an error, setError and log it
       setError(err.response);
       console.log("error is: " + err.response);
     });
+
+    return data;
   }
 
   // API to get ALL items
@@ -133,7 +187,6 @@ export default function App() {
   // If the App component mounted, then fetch array of store objects
   React.useEffect(() => {
     fetchItems();
-    console.log("product is: " + products);
   }, []);
 
   return (
@@ -141,11 +194,11 @@ export default function App() {
       <BrowserRouter>
         <main>
           <Navbar />
-          <Sidebar isOpen={isOpen} setIsOpen={setIsOpen} shoppingCart={shoppingCart} products={products}
-            handleOnCheckoutFormChange={handleOnCheckoutFormChange} handleOnSubmitCheckoutForm={handleOnSubmitCheckoutForm}
+          <Sidebar checkedOut={checkedOut} fetchSpecificItem={fetchSpecificItem} isOpen={isOpen} setIsOpen={setIsOpen} shoppingCart={shoppingCart} products={products}
+            checkoutForm={checkoutForm} handleOnCheckoutFormChange={handleOnCheckoutFormChange} handleOnSubmitCheckoutForm={handleOnSubmitCheckoutForm}
             handleOnToggle={handleOnToggle} />
           <Routes>
-            <Route path="/" element={<Home products={products} handleSetSearchTerm={handleSetSearchTerm}
+            <Route path="/" element={<Home products={products} searchTerm={searchTerm} handleSetSearchTerm={handleSetSearchTerm}
               handleSelectCategory={handleSelectCategory} handleDisplayItemOnClick={handleDisplayItemOnClick} fetchItems={fetchItems}
               handleAddItemToCart={handleAddItemToCart} handleRemoveItemFromCart={handleRemoveItemFromCart} />}></Route>
             {products.map((obj) => (<Route path={"/products/" + obj.id} element={<ProductDetail item={obj} />}> </Route>))}

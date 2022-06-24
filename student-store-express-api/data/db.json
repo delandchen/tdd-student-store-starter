@@ -145,5 +145,40 @@
       "price": 999.99
     }
   ],
-  "purchases": []
+  "purchases": [
+    {
+      "id": 0,
+      "name": "asdasdasd",
+      "email": "asdad@gmail.com",
+      "cart": [
+        {
+          "itemId": 2,
+          "quantity": 3
+        },
+        {
+          "itemId": 3,
+          "quantity": 4
+        },
+        {
+          "itemId": 4,
+          "quantity": 5
+        }
+      ],
+      "createdAt": "2022-06-24T18:33:17.824Z",
+      "total": 35.572125
+    },
+    {
+      "id": 1,
+      "name": "deland chen",
+      "email": "deland@gmail.com",
+      "cart": [
+        {
+          "itemId": 8,
+          "quantity": 6
+        }
+      ],
+      "createdAt": "2022-06-24T18:41:19.324Z",
+      "total": 130.43474999999998
+    }
+  ]
 }

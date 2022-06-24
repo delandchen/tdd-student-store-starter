@@ -23,4 +23,16 @@ router.get("/:productId", async (req, res, next) => {
     }
 })
 
+router.post("/", async (req, res, next) => {
+    try {
+        const newOrder = req.body;
+        const response = await Store.createPurchaseOrder(newOrder);
+        console.log(response);
+        res.status(200).json({ purchase: response });
+    }
+    catch (err) {
+        next(err)
+    }
+})
+
 module.exports = router;

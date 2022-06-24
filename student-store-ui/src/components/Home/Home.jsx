@@ -4,7 +4,7 @@ import { Link } from "react-router-dom"
 import ProductGrid from "../ProductGrid/ProductGrid"
 import Hero from "../Hero/Hero"
 
-export default function Home(props, { handleAddItemToCart, handleRemoveItemFromCart }) {
+export default function Home({ searchTerm, handleDisplayItemOnClick, products, handleSetSearchTerm, handleAddItemToCart, handleRemoveItemFromCart, handleSelectCategory, fetchItems }) {
   return (
     <div className="home">
       {/* <div className="banner">
@@ -14,16 +14,16 @@ export default function Home(props, { handleAddItemToCart, handleRemoveItemFromC
       <div className="home-navbar">
         <div className="search">
           <form id="search-form">
-            <input onChange={props.handleSetSearchTerm} id="search-bar" type="text" placeholder="Search for an item...">
+            <input value={searchTerm} onChange={handleSetSearchTerm} id="search-bar" type="text" placeholder="Search for an item...">
             </input>
           </form>
         </div>
         <div className="categories">
-          <h2 onClick={() => props.fetchItems()}> All Categories </h2>
-          <h2 onClick={() => props.handleSelectCategory("clothing")}> Clothing </h2>
-          <h2 onClick={() => props.handleSelectCategory("food")}> Food </h2>
-          <h2 onClick={() => props.handleSelectCategory("accessories")}> Accessories </h2>
-          <h2 onClick={() => props.handleSelectCategory("tech")}> Tech </h2>
+          <h2 onClick={() => fetchItems()}> All Categories </h2>
+          <h2 onClick={() => handleSelectCategory("clothing")}> Clothing </h2>
+          <h2 onClick={() => handleSelectCategory("food")}> Food </h2>
+          <h2 onClick={() => handleSelectCategory("accessories")}> Accessories </h2>
+          <h2 onClick={() => handleSelectCategory("tech")}> Tech </h2>
 
         </div>
       </div>
@@ -34,7 +34,7 @@ export default function Home(props, { handleAddItemToCart, handleRemoveItemFromC
           ))}
         </div>
       </div> */}
-      <ProductGrid products={props.products} handleAddItemToCart={handleAddItemToCart} handleRemoveItemFromCart={handleRemoveItemFromCart} />
+      <ProductGrid products={products} handleAddItemToCart={handleAddItemToCart} handleRemoveItemFromCart={handleRemoveItemFromCart} handleDisplayItemOnClick={handleDisplayItemOnClick} />
       <div id="about" className="about">
         <div class="content">
           <div class="summary">

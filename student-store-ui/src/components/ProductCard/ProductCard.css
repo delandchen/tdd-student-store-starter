@@ -5,6 +5,7 @@
     max-width: 200px;
     height: 300px;
     width: 200px;
+    justify-content: center;
 }
 
 .product-card .description {
