@@ -20,6 +20,7 @@ export default function App() {
   const [searchTerm, setSearchTerm] = React.useState("");
   const [checkoutForm, setCheckoutForm] = React.useState({ email: "", name: "" })
   const [checkedOut, setCheckedOut] = React.useState(false);
+  const [receipt, setReceipt] = React.useState({});
 
   // Handlers //
 
@@ -76,21 +77,22 @@ export default function App() {
 
   // For removing from cart
   const handleRemoveItemFromCart = (productId) => {
-    if (shoppingCart.some(el => el.itemId == productId)) {
-      const newArr = [...shoppingCart];
+    const newArr = [...shoppingCart];
 
+    if (newArr.some(el => el.itemId == productId)) {
       newArr.forEach((el, idx) => {
-        if (el.itemId == productId && el.quantity > 1) {
-          el.quantity -= 1;
-        }
-        else if (el.id == productId && el.quantity == 0) {
-          newArr.splice(idx, 1);
+        if (el.itemId == productId) {
+          if (el.quantity > 1) {
+            newArr[idx].quantity -= 1;
+          }
+          else if (el.quantity == 1) {
+            newArr.splice(idx, 1);
+          }
         }
       })
 
-      setShoppingCart[[...newArr]];
-      console.log(shoppingCart);
     }
+    setShoppingCart(newArr);
   }
 
   // name is attribute of the input being updated, value is the new value for the input
@@ -107,12 +109,20 @@ export default function App() {
 
   // API post to purchase in db.json
   const handleOnSubmitCheckoutForm = async () => {
-    const response = await axios.post("http://localhost:3001/store/", { shoppingCart: shoppingCart, user: checkoutForm })
-    console.log(response.data.purchase);
+    axios.post("http://localhost:3001/store/", { user: checkoutForm, shoppingCart: shoppingCart }).then(
+      (response) => {
+        setReceipt({ ...response.data.purchase.receipt });
+        console.log(receipt)
+        setShoppingCart([]);
+        setCheckoutForm({ email: "", name: "" });
+        setCheckedOut(true);
 
-    setShoppingCart([]);
-    setCheckoutForm({ email: "", name: "" })
-    setCheckedOut(true);
+      },
+      (err) => {
+        setError(err);
+        setSuccess(false);
+      }
+    )
   }
 
   // API Calls //
@@ -194,7 +204,7 @@ export default function App() {
       <BrowserRouter>
         <main>
           <Navbar />
-          <Sidebar checkedOut={checkedOut} fetchSpecificItem={fetchSpecificItem} isOpen={isOpen} setIsOpen={setIsOpen} shoppingCart={shoppingCart} products={products}
+          <Sidebar receipt={receipt} checkedOut={checkedOut} fetchSpecificItem={fetchSpecificItem} isOpen={isOpen} setIsOpen={setIsOpen} shoppingCart={shoppingCart} products={products}
             checkoutForm={checkoutForm} handleOnCheckoutFormChange={handleOnCheckoutFormChange} handleOnSubmitCheckoutForm={handleOnSubmitCheckoutForm}
             handleOnToggle={handleOnToggle} />
           <Routes>

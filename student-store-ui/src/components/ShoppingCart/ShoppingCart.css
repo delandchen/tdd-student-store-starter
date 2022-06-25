@@ -1,0 +1,22 @@
+.shopping-cart {
+    position: relative;
+    right: 10px;
+    background-color: rgb(253, 251, 251);
+    min-height: 5vh;
+    max-width: 300px;
+    margin: auto;
+    margin-bottom: 30px;
+    margin-top: 30px;
+    border: solid black 1px;
+    border-radius: 5px;
+}
+
+.shopping-cart li {
+    margin: auto;
+}
+
+.shopping-cart h3 {
+    margin: auto;
+    padding: 15px;
+    font-size: medium;
+}

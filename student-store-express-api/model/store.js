@@ -40,6 +40,7 @@ class Store {
             cart: cart,
             createdAt: createdAt,
             total: totalCost,
+            receipt: { total: totalCost, name: name, email: email, time: createdAt }
         }
 
         storage.get("purchases").push(newPurchaseOrder).write()

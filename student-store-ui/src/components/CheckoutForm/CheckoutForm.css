@@ -1,0 +1,29 @@
+.checkout-form {
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.checkout-form .input {
+    display: flex;
+    flex-direction: row;
+}
+
+.checkout-form .checkout-form-input {
+    margin: 10px;
+    margin-bottom: 10px;
+}
+
+.checkout-form .checkout-button {
+    margin: auto;
+    max-width: 150px;
+    max-height: 30px;
+    width: 150px;
+    height: 30px;
+    margin-bottom: 30px;
+}
+
+.checkout-form h2 {
+    margin: auto;
+}

@@ -9,6 +9,7 @@
     background-color: #379683;
     z-index: 100;
     transition: width .5s;
+    justify-content: center;
 }
 
 .sidebar .content {

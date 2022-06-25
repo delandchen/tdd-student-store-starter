@@ -28,7 +28,7 @@ router.post("/", async (req, res, next) => {
         const newOrder = req.body;
         const response = await Store.createPurchaseOrder(newOrder);
         console.log(response);
-        res.status(200).json({ purchase: response });
+        res.status(201).json({ purchase: response });
     }
     catch (err) {
         next(err)
