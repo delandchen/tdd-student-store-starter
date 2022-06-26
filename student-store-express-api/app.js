@@ -1,6 +1,7 @@
 const storeRouter = require('./routes/store');
 const express = require('express');
 const cors = require('cors')
+const { NotFoundError } = require("./utils/errors")
 
 const app = express();
 
@@ -15,8 +16,7 @@ app.get('/', (req, res) => {
 
 // 404 Errors 
 app.use((req, res, next) => {
-    // return next(new NotFoundError())
-    return;
+    return next(new NotFoundError())
 })
 
 // Generic Handler

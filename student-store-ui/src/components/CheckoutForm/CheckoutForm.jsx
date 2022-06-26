@@ -1,7 +1,7 @@
 import * as React from 'react'
 import "./CheckoutForm.css"
 
-export default function CheckoutForm({ checkedOut, isOpen, checkoutForm, ShoppingCart, handleOnCheckoutFormChange, handleOnSubmitCheckoutForm }) {
+export default function CheckoutForm({ error, checkedOut, isOpen, checkoutForm, ShoppingCart, handleOnCheckoutFormChange, handleOnSubmitCheckoutForm }) {
     return (
         <div className="checkout-form">
             <div className="input">
@@ -11,6 +11,7 @@ export default function CheckoutForm({ checkedOut, isOpen, checkoutForm, Shoppin
 
             <button className="checkout-button" onClick={handleOnSubmitCheckoutForm} > Checkout </button>
             {(checkedOut) ? <h2 className="success"> Success! </h2> : null}
+            {(error) ? <h2 className="error"> {error} </h2> : null}
         </div >
     )
 }

@@ -24,6 +24,15 @@
     margin-bottom: 30px;
 }
 
-.checkout-form h2 {
+.checkout-form .success {
     margin: auto;
+    color: rgb(0, 138, 0);
+    font-size: medium;
+}
+
+.checkout-form .error {
+    margin: auto;
+    color: rgb(255, 36, 36);
+    font-size: medium;
+
 }

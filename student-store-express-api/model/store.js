@@ -1,4 +1,5 @@
 const { storage } = require("../data/storage");
+const { BadRequestError } = require("../utils/errors")
 
 class Store {
     static async fetchProducts() {
@@ -12,9 +13,13 @@ class Store {
     }
 
     static async createPurchaseOrder(newOrder) {
-        if (!newOrder["shoppingCart"] || !newOrder["user"]) {
+        if (!newOrder["shoppingCart"].length) {
             // Throw error
-            return "Need fields";
+            throw new BadRequestError("Shopping Cart is Empty");
+        }
+
+        if (!newOrder["user"].name || !newOrder["user"].email) {
+            throw new BadRequestError("Missing email or name");
         }
         // Required fields
         const id = storage.get("purchases").value().length + 1;

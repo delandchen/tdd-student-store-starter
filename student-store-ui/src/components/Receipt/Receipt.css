@@ -1,0 +1,23 @@
+.receipt {
+    position: relative;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    background-color: rgb(253, 251, 251);
+    border: solid black 1px;
+    border-radius: 5px;
+    margin-top: 40px;
+    max-width: 300px;
+    padding: 10px;
+    right: 5px;
+}
+
+.receipt h2 {
+    font-size: 20px;
+    margin: auto;
+}
+
+.receipt p {
+    margin-left: 5px;
+}

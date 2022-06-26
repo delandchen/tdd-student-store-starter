@@ -21,6 +21,7 @@ export default function App() {
   const [checkoutForm, setCheckoutForm] = React.useState({ email: "", name: "" })
   const [checkedOut, setCheckedOut] = React.useState(false);
   const [receipt, setReceipt] = React.useState({});
+  const [success, setSuccess] = React.useState(false);
 
   // Handlers //
 
@@ -49,6 +50,7 @@ export default function App() {
 
     if (isOpen) {
       setIsOpen(false);
+      setSuccess(false);
       document.querySelector(".sidebar").classList.remove("opened")
     }
   }
@@ -111,16 +113,16 @@ export default function App() {
   const handleOnSubmitCheckoutForm = async () => {
     axios.post("http://localhost:3001/store/", { user: checkoutForm, shoppingCart: shoppingCart }).then(
       (response) => {
-        setReceipt({ ...response.data.purchase.receipt });
-        console.log(receipt)
+        setReceipt(response.data.purchase.receipt);
         setShoppingCart([]);
         setCheckoutForm({ email: "", name: "" });
         setCheckedOut(true);
+        setSuccess(true);
+        setError(false);
 
       },
       (err) => {
-        setError(err);
-        setSuccess(false);
+        setError(err.response.data.error.message);
       }
     )
   }
@@ -204,7 +206,7 @@ export default function App() {
       <BrowserRouter>
         <main>
           <Navbar />
-          <Sidebar receipt={receipt} checkedOut={checkedOut} fetchSpecificItem={fetchSpecificItem} isOpen={isOpen} setIsOpen={setIsOpen} shoppingCart={shoppingCart} products={products}
+          <Sidebar error={error} success={success} receipt={receipt} checkedOut={checkedOut} fetchSpecificItem={fetchSpecificItem} isOpen={isOpen} setIsOpen={setIsOpen} shoppingCart={shoppingCart} products={products}
             checkoutForm={checkoutForm} handleOnCheckoutFormChange={handleOnCheckoutFormChange} handleOnSubmitCheckoutForm={handleOnSubmitCheckoutForm}
             handleOnToggle={handleOnToggle} />
           <Routes>
